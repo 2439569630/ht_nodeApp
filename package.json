@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "axios": "^1.4.0",
+    "cors": "^2.8.5",
+    "express": "^5.0.0-beta.1",
+    "mysql": "^2.18.1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "test/*",
+      "docs/*"
+    ],
+    "delay": "2500"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
