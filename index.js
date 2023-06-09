@@ -25,7 +25,7 @@ server.use('/data', listData)
 // 删除数据
 server.use('/delete', Delete)
 // 响应岗位
-server.use('        ', Post)
+server.use('/post', Post)
 // 修改数据
 server.use('/modify', modify)
 // 添加数据
