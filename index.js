@@ -8,13 +8,14 @@ const Delete = require('./list/delete')
 const Post = require('./list/post')
 const modify = require('./list/modify')
 const AddData = require('./list/addData')
+const hostname = require('./db/config')
 server.use(cors({
     // origin: 'http://localhost:5173',
     origin: '*'
 }))
 
 
-
+console.log(hostname);
 
 // 列表路由
 server.use('/list', leftList)
@@ -32,8 +33,8 @@ server.use('/modify', modify)
 server.use('/adddata', AddData)
 
 
-const hostname = '0.0.0.0';
-server.listen(9999, hostname,() => {
+
+server.listen(hostname.port, hostname.host,() => {
     console.log('服务器启动成功！');
     pool.query('SELECT 1', (error, results, fields) => {
         if (error) throw error;
