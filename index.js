@@ -38,7 +38,7 @@ server.listen(hostname.port, hostname.host,() => {
     console.log('服务器启动成功！');
     pool.query('SELECT 1', (error, results, fields) => {
         if (error) throw error;
-        if (results.length > 0 && results[0]['1'] === 1) {
+        if (results.length > 0 && results[0]['1'] === 1) {+
             console.log('已经成功连接到数据库');
         } else {
             console.log('连接数据库失败');
