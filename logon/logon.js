@@ -121,17 +121,33 @@ router.route('/logon/uesrdata')
 // 登录记录响应
 // 每次登录后响应一条上次登录的记录
 router.route('/loginRecord')
-    .get((req, res, next) => {
+    .post((req, res, next) => {
         if (req.session.userID) {
-            const sql = 'select * from user_login_records where user_id = ?'
+            const sql = 'SELECT * FROM user_login_records WHERE user_id = ? ORDER BY login_time DESC LIMIT 1 OFFSET 1;'
             pool.query(sql, [req.session.userID], (error, result, fields) => {
-                
+                if (error) {
+                    console.log(error)
+                    next(createError(500, '服务器错误'))
+                }
+                else {
+                    const {login_time, login_location, ip_address, login_device} = result[0]
+                    console.log({login_time, login_location, ip_address, login_device})
+                    
+                    res.json({
+                        name: req.session.name,
+                        'loginTime': login_time,
+                        'loginLocation': login_location,
+                        'ip': ip_address,
+                        'loginDevice': login_device
+                    })
+                    
+                }
             })
         }
         else {
             next(createError(404, '未登录'))
         }
-    })
+})
 
 
 
