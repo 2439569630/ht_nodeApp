@@ -16,6 +16,7 @@ coverage
 sessions
 /cypress/videos/
 /cypress/screenshots/
+sessions/*.json
 
 # Editor directories and files
 .vscode/*
