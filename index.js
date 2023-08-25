@@ -91,6 +91,27 @@ server.use('/modify', checkLogin, require('./list/modify'))
 // 添加数据
 server.use('/adddata', checkLogin, require('./list/addData'))
 
+/**
+ * 考勤管理路由
+ */
+
+    /**
+     * 考勤记录
+     */
+
+    /**
+     * 加班管理
+     */
+    server.use('/overtime', checkLogin, require('./attendanceManagement/overtimeManagement/overtimeManagement'))
+    /**
+     * 出差管理
+     */
+    /**
+     * 请假管理
+ */
+
+
+
 
 
 
