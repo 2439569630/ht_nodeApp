@@ -71,8 +71,12 @@ const checkLogin = (req, res, next) => {
         next()
     } else {
         // session ID 无效，删除包含该 session ID 的 cookie
-        res.clearCookie('connect.sid')
-        res.status(401).send('无效的 session')
+        // res.clearCookie('connect.sid')
+        console.log('清除了' + req.sessionID)
+        res.status(401).send({
+            code: 401,
+            message: '请登录'
+        })
     }
 }
 
@@ -123,19 +127,23 @@ server.use('/adddata', checkLogin, require('./list/addData'))
 
 
 
-
-
-
 // 错误处理中间件
 // 处理用户无效的路由返回404，通常写在路由的最后，当之前的路由都不能匹配就匹配404
+// 未匹配到任何路由的情况下，返回404错误
 server.use((req, res, next) => {
-    next(createError(404,'页面不存在'))
-})
+    res.status(404).json({
+        code: 404,
+        message: '页面不存在'
+    });
+});
 
 // 根据状态码返回err的信息给用户，没有状态码就返回500服务器错误信息
 server.use((err, req, res,next)=> {
     res.status(err.status || 500)
-    res.end(err.message.toString())
+    res.end({
+        code: err.status || 500,
+        message: err.message.toString()
+    })
 })
 
 server.listen(hostname.port, hostname.host, () => {

@@ -5,16 +5,7 @@ const readRSA = require('./../RSA/readRSA')
 // 创建 HTTP 错误对象
 const createError = require('http-errors');
 router.route('/logon')
-    .post((req, res, next) => {
-        // 已经登录的重定向
-        // if (req.session.userID) {
-        //     if (req.session.userID) {
-        //         res.json({ isAuthenticated: true })
-        //     } else {
-        //         res.json({ isAuthenticated: false })
-        //     }
-        //     return
-        // }   
+    .post((req, res, next) => {  
         next()
     })
     .post((req, res, next) => {
@@ -69,7 +60,10 @@ router.route('/logon')
         // 在 session 对象中存储用户权限
         session['permission'] = req.permissionID  
         res.status(200)
-        res.send({msg: '登录成功'})
+        res.send({
+            code: 200,
+            msg: '登录成功'
+        })
         next()
     })
     .post((req, res, next) => {
@@ -157,7 +151,11 @@ router.route('/logon/exit')
             if (err) {
                 next(createError(500, '服务器错误'))
             } else {
-                res.send('退出登录成功')
+                res.status(200)
+                res.send({
+                    code: 200,
+                    message: '退出成功'
+                })
             }
         })
     })
@@ -166,7 +164,10 @@ router.route('/logon/exit')
 // 根据状态码返回err的信息给用户，没有状态码就返回500服务器错误信息
 router.use((err, req, res, next) => {
     res.status(err.status || 500)
-    res.end(err.message.toString())
+    res.end({
+        code: err.status || 500,
+        message: err.message.toString()
+    })
 })
 
 
